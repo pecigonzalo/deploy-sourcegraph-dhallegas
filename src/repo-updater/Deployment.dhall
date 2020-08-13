@@ -18,6 +18,11 @@ let metadata =
           )
       }
 
+let templateMeta =
+      k8s.ObjectMeta::{
+      , labels = Some (toMap { deploy = "sourcegraph", app = "repo-updater" })
+      }
+
 let config =
       { name = "repo-updater"
       , repo = "index.docker.io/sourcegraph/repo-updater"
@@ -38,11 +43,6 @@ let config =
           }
         , type = Some "RollingUpdate"
         }
-      }
-
-let templateMeta =
-      k8s.ObjectMeta::{
-      , labels = Some (toMap { deploy = "sourcegraph", app = "repo-updater" })
       }
 
 let spec =
@@ -78,4 +78,4 @@ let deployment =
       , spec = Some spec
       }
 
-in  deployment
+in  { Type = k8s.Deployment.Type, default = deployment }
