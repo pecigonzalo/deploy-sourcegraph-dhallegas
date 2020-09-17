@@ -2,7 +2,6 @@ let k8s = ../common/imports.dhall
 
 let config =
       { name = "repo-updater"
-      , labels.deploy = "sourcegraph"
       , description =
           "Handles repository metadata (not Git data) lookups and updates from external code hosts and other similar services."
       , repo = "index.docker.io/sourcegraph/repo-updater"
