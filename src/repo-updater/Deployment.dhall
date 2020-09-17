@@ -4,20 +4,17 @@ let containers = ./Containers.dhall
 
 let config = ./Config.dhall
 
-let labels = { deploy = "sourcegraph" }
-
 let metadata =
       k8s.ObjectMeta::{
       , name = Some config.name
       , annotations = Some (toMap { description = config.description })
-      , labels = Some
-          ( toMap
-              ({ sourcegraph-resource-requires = "no-cluster-admin" } ⫽ labels)
-          )
+      , labels = Some (toMap config.labels)
       }
 
 let templateMetadata =
-      k8s.ObjectMeta::{ labels = Some (toMap ({ app = config.name } ⫽ labels)) }
+      k8s.ObjectMeta::{
+      , labels = Some (toMap ({ app = config.name } ⫽ config.labels))
+      }
 
 let spec =
       k8s.DeploymentSpec::{
