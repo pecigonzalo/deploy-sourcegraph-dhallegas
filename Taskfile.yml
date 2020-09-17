@@ -19,6 +19,7 @@ tasks:
           DST: ../../dst/repo-updater.Service.yaml
     sources:
       - src/repo-updater/*.dhall
+      - src/common/*.dhall
     generates:
       - dst/repo-updater.Deployment.yaml
       - dst/repo-updater.Service.yaml
