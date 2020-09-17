@@ -1,25 +1,30 @@
 version: "3"
 
 tasks:
-  generate:
+  yaml:
     dir: "{{.DIR}}"
     cmds:
       - dhall-to-yaml --explain < {{.SRC}} > {{.DST}}
-  repo-updater:
+  dhall:
     cmds:
-      - task: generate
+      - task: yaml
         vars:
-          DIR: src/repo-updater
+          DIR: src/{{.NAME}}
           SRC: Deployment.dhall
-          DST: ../../dst/repo-updater.Deployment.yaml
-      - task: generate
+          DST: ../../dst/{{.NAME}}.Deployment.yaml
+      - task: yaml
         vars:
-          DIR: src/repo-updater
+          DIR: src/{{.NAME}}
           SRC: Service.dhall
-          DST: ../../dst/repo-updater.Service.yaml
+          DST: ../../dst/{{.NAME}}.Service.yaml
     sources:
-      - src/repo-updater/*.dhall
+      - src/{{.NAME}}/*.dhall
       - src/common/*.dhall
     generates:
-      - dst/repo-updater.Deployment.yaml
-      - dst/repo-updater.Service.yaml
+      - dst/{{.NAME}}.Deployment.yaml
+      - dst/{{.NAME}}.Service.yaml
+  repo-updater:
+    cmds:
+      - task: dhall
+        vars:
+          NAME: repo-updater
