@@ -25,6 +25,4 @@ let config =
         }
       }
 
-let asd = toMap ({ app = "asd" } ⫽ config.labels)
-
 in  config
